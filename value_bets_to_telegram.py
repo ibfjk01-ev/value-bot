@@ -413,7 +413,7 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
 💹 EV: {ev_display}
 
 {verdict}
-"""
+
 """
 
 
