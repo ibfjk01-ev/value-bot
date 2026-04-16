@@ -354,34 +354,30 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
     else:
         league_name = "Unbekannte Liga"
 
-market = get_market_name_from_bet(bet)
-side = get_side_from_bet(bet)
-
-# 🔥 FIX: bessere Anzeige je nach Markt
-display_side = side
-
-# Totals → over/under
-if "total" in market:
-    if side == "home":
-        display_side = "over"
-    elif side == "away":
-        display_side = "under"
-
-# BTTS
-elif "btts" in market or "both teams to score" in market:
-    if side == "home":
-        display_side = "yes"
-    elif side == "away":
-        display_side = "no"
-
-# Team Totals
-elif "team total" in market:
-    if side == "home":
-        display_side = "over"
-    elif side == "away":
-        display_side = "under"
+    market = get_market_name_from_bet(bet)
+    side = get_side_from_bet(bet)
     price = get_price_from_bet(bet)
     ev_display = get_ev_display(bet)
+
+    display_side = side
+
+    if "team total" in market:
+        if side == "home":
+            display_side = "over"
+        elif side == "away":
+            display_side = "under"
+
+    elif "btts" in market or "both teams to score" in market:
+        if side == "home":
+            display_side = "yes"
+        elif side == "away":
+            display_side = "no"
+
+    elif "total" in market:
+        if side == "home":
+            display_side = "over"
+        elif side == "away":
+            display_side = "under"
 
     bf_price = None
     if isinstance(betfair_odds, dict):
@@ -399,17 +395,17 @@ elif "team total" in market:
             verdict = f"⚠️ Betfair liegt höher: {diff:.2f}"
         else:
             header = "🔵 VALUE – nah am Markt"
-            verdict = "ℹ️ Nahe am Betfair-Markt"
+            verdict = "📊 Nahe am Betfair-Markt"
     else:
         header = "🟡 VALUE BET"
-        verdict = "📈 Keine passenden Betfair-Daten vorhanden"
+        verdict = "🧮 Keine passenden Betfair-Daten vorhanden"
 
     return f"""{header}
 
 🏅 {sport}
 ⚔️ {home} vs {away}
 🏆 {league_name}
-🎯 {market.upper()}
+🎯 {market}
 📌 {display_side}
 
 💰 Bet365: {price}
@@ -417,6 +413,7 @@ elif "team total" in market:
 💹 EV: {ev_display}
 
 {verdict}
+"""
 """
 
 
