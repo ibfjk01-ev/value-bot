@@ -364,22 +364,22 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
         if bf_price is None:
             bf_price = betfair_odds.get(normalize_side_key(side))
 
-    if price is not None and bf_price is not None:
-        diff = price - bf_price
-        if diff > DIFF_THRESHOLD:
-            header = "🟢 STRONG VALUE BET"
-            verdict = f"✅ Value über Betfair: +{diff:.2f}"
-        elif diff < -DIFF_THRESHOLD:
-            header = "🟠 VALUE – Markt skeptisch"
-            verdict = f"⚠️ Betfair liegt höher: {diff:.2f}"
-        else:
-            header = "🔵 VALUE – nah am Markt"
-            verdict = "📊 Nahe am Betfair-Markt"
-    else:
-        header = "🟡 VALUE BET"
-        verdict = "🧮 Keine passenden Betfair-Daten vorhanden"
+if price is not None and bf_price is not None:
+    diff = price - bf_price
 
-    return f"""{header}
+    if diff <= 0:
+        return None
+
+    if diff > DIFF_THRESHOLD:
+        header = "🟢 STRONG VALUE BET"
+        verdict = f"✅ Value über Betfair: +{diff:.2f}"
+    else:
+        header = "🔵 LEICHTES VALUE"
+        verdict = "📊 Kleiner Vorteil gegenüber Markt"
+else:
+    return None
+
+return f"""{header}
 
 🏅 {sport}
 ⚔️ {home} vs {away}
@@ -392,6 +392,7 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
 💹 EV: {ev_display}
 
 {verdict}
+"""
 
 """
 
@@ -421,6 +422,10 @@ def main() -> None:
             odds_data = get_event_odds(event_id)
             betfair_odds = extract_first_betfair_odds(odds_data)
             message = build_message(bet, betfair_odds)
+
+            if message is None:
+                continue
+
             send_telegram(message)
             sent += 1
 
