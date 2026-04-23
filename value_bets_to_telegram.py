@@ -310,7 +310,7 @@ def get_ev_display(bet: Dict[str, Any]) -> str:
         return str(ev)
 
 
-def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
+def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Optional[str]:
     event = get_event_from_bet(bet)
 
     home = (
@@ -345,13 +345,11 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
             display_side = "over"
         elif side == "away":
             display_side = "under"
-
     elif "btts" in market or "both teams to score" in market:
         if side == "home":
             display_side = "yes"
         elif side == "away":
             display_side = "no"
-
     elif "total" in market:
         if side == "home":
             display_side = "over"
@@ -364,24 +362,22 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> str:
         if bf_price is None:
             bf_price = betfair_odds.get(normalize_side_key(side))
 
-if price is not None and bf_price is not None:
-    diff = price - bf_price
+    bf_price = parse_float(bf_price)
 
-    if diff <= 0:
+    if price is not None and bf_price is not None:
+        diff = price - bf_price
+
+        if diff <= 0:
+            return None
+
+        if diff > DIFF_THRESHOLD:
+            verdict = f"STRONG VALUE | Value ueber Betfair: +{diff:.2f}"
+        else:
+            verdict = "LEICHTES VALUE | Kleiner Vorteil gegenueber Markt"
+    else:
         return None
 
-    if diff > DIFF_THRESHOLD:
-        header = "🟢 STRONG VALUE BET"
-        verdict = f"✅ Value über Betfair: +{diff:.2f}"
-    else:
-        header = "🔵 LEICHTES VALUE"
-        verdict = "📊 Kleiner Vorteil gegenüber Markt"
-else:
-    return None
-
-
-
-return f"""Sport: {sport}
+    return f"""Sport: {sport}
 Event: {home} vs {away}
 Liga: {league_name}
 Market: {market}
