@@ -381,15 +381,15 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Option
 
     return f"""{header}
 
-Sport: {sport}
-Event: {home} vs {away}
-Liga: {league_name}
-Market: {market}
-Side: {display_side}
+    Sport: {sport}
+    Event: {home} vs {away}
+    Liga: {league_name}
+    Market: {market}
+    Side: {display_side}
 
-Bet365: {price}
-Betfair: {bf_price}
-EV: {ev_display}
+    Bet365: {price}
+    Betfair: {bf_price}
+    EV: {ev_display}
 
 {verdict}
 """
