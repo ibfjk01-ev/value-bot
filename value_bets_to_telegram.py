@@ -371,11 +371,11 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Option
             return None
 
         if diff > DIFF_THRESHOLD:
-    header = "🟢 STRONG VALUE"
-    verdict = f"Value ueber Betfair: +{diff:.2f}"
-else:
-    header = "🔵 SMALL VALUE"
-    verdict = "Kleiner Value gegenueber Markt"
+            header = "🟢 STRONG VALUE"
+            verdict = f"Value ueber Betfair: +{diff:.2f}"
+        else:
+            header = "🔵 SMALL VALUE"
+            verdict = "Kleiner Value gegenueber Markt"
     else:
         return None
 
