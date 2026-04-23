@@ -381,15 +381,15 @@ else:
 
 
 
-🏅 {sport}
-⚔️ {home} vs {away}
-🏆 {league_name}
-🎯 {market}
-📌 {display_side}
+Sport: {sport}
+Event: {home} vs {away}
+Liga: {league_name}
+Market: {market}
+Side: {display_side}
 
-💰 Bet365: {price}
-📊 Betfair: {bf_price}
-💹 EV: {ev_display}
+Bet365: {price}
+Betfair: {bf_price}
+EV: {ev_display}
 
 {verdict}
 """
