@@ -145,37 +145,16 @@ def get_market_name_from_bet(bet: Dict[str, Any]) -> str:
 def allowed_market(name: str) -> bool:
     n = str(name).strip().lower()
 
-    blocked = [
-        "corner",
-        "corners",
-        "spread",
-        "handicap",
-        "asian handicap",
-        "ht",
-        "1st half",
-        "first half",
-        "2nd half",
-        "second half",
-        "quarter",
-        "period",
-        "set ",
-        "player prop",
-        "prop",
-    ]
-    if any(x in n for x in blocked):
-        return False
+    allowed = {
+        "ml",
+        "moneyline",
+        "h2h",
+        "winner",
+        "match winner",
+        "1x2",
+    }
 
-    if "btts" in n or "both teams to score" in n:
-        return True
-    if "team total" in n:
-        return True
-    if "total" in n:
-        return True
-    if n in ["ml", "moneyline", "h2h", "winner", "match winner", "1x2"]:
-        return True
-
-    return False
-
+    return n in allowed
 
 def filter_bets(bets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     result = []
