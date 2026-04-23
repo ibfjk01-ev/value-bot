@@ -379,7 +379,7 @@ if price is not None and bf_price is not None:
 else:
     return None
 
-return f"""{header}
+
 
 🏅 {sport}
 ⚔️ {home} vs {away}
