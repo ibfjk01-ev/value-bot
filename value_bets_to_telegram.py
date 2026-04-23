@@ -394,10 +394,7 @@ EV: {ev_display}
 {verdict}
 """
 
-{verdict}
-"""
 
-"""
 
 
 def main() -> None:
