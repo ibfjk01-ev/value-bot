@@ -1,7 +1,7 @@
 import requests
 from typing import Any, Dict, List, Optional
 
-API_KEY = "45ccde3fcd3defc883226b1b230bcdb6eada5a4ae796717791796aaea2aa1e47"
+API_KEY = "cfca9497b54aaabbfa131ba19c8b599feddf0b83aa535472ad45b2b5cb3c4e21"
 BOT_TOKEN = "8693511806:AAEHyiVYNhEki0C1crRdC-4eIcN4-gG9RWM"
 CHAT_ID = "253296226"
 
