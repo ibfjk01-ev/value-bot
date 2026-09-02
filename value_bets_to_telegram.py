@@ -7,8 +7,8 @@ CHAT_ID = "253296226"
 
 BASE_URL = "https://api.odds-api.io/v3"
 
-VALUE_BOOKMAKER = "Bet365"
-REFERENCE_BOOKMAKER = "Betfair Exchange"
+VALUE_BOOKMAKER = "Tipico"
+REFERENCE_BOOKMAKER = "Bet365"
 
 ALLOWED_SPORTS = {"football", "tennis", "basketball"}
 ALLOWED_LEAGUES = set()  # leer = alle Ligen
