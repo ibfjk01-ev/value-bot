@@ -171,6 +171,9 @@ def filter_bets(bets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             continue
 
         if not allowed_market(market):
+            price = get_price_from_bet(bet)
+
+if price is None or price < 1.50 or price > 3.00:
             continue
 
         result.append(bet)
