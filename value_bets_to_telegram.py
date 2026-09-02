@@ -180,8 +180,8 @@ def filter_bets(bets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def normalize_bookmaker_name(name: str) -> str:
     n = str(name).strip().lower()
-    if n in {"betfair exchange", "betfair", "betfair_exchange"}:
-        return "Betfair Exchange"
+    if n in {"Tipico", "Tipico", "Tipico"}:
+        return "Tipico"
     return name
 
 
@@ -220,13 +220,13 @@ def parse_odds_mapping(odds_mapping: Dict[str, Any]) -> Dict[str, float]:
     return result
 
 
-def extract_first_betfair_odds(odds_data: Dict[str, Any]) -> Dict[str, float]:
+def extract_first_Bet365_odds(odds_data: Dict[str, Any]) -> Dict[str, float]:
     bookmakers = odds_data.get("bookmakers", {})
     if not isinstance(bookmakers, dict):
         return {}
 
     for raw_name, data in bookmakers.items():
-        if normalize_bookmaker_name(raw_name) != "Betfair Exchange":
+        if normalize_bookmaker_name(raw_name) != "Bet365":
             continue
 
         if isinstance(data, list):
@@ -310,7 +310,7 @@ def get_ev_display(bet: Dict[str, Any]) -> str:
         return str(ev)
 
 
-def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Optional[str]:
+def build_message(bet: Dict[str, Any], Bet365_odds: Dict[str, float]) -> Optional[str]:
     event = get_event_from_bet(bet)
 
     home = (
@@ -357,10 +357,10 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Option
             display_side = "under"
 
     bf_price = None
-    if isinstance(betfair_odds, dict):
-        bf_price = betfair_odds.get(side)
+    if isinstance(Bet365_odds, dict):
+        bf_price = Bet365_odds.get(side)
         if bf_price is None:
-            bf_price = betfair_odds.get(normalize_side_key(side))
+            bf_price = Bet365_odds.get(normalize_side_key(side))
 
     bf_price = parse_float(bf_price)
 
@@ -372,7 +372,7 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Option
 
         if diff > DIFF_THRESHOLD:
             header = "🟢 STRONG VALUE"
-            verdict = f"Value compared to BETFAIR: +{diff:.2f}"
+            verdict = f"Value compared to Bet365: +{diff:.2f}"
         else:
             header = "🔵 SMALL VALUE"
             verdict = "Low value compared to the market"
@@ -387,8 +387,8 @@ def build_message(bet: Dict[str, Any], betfair_odds: Dict[str, float]) -> Option
     Market: {market}
     Side: {display_side}
 
-    Bet365: {price}
-    Betfair: {bf_price}
+    Tipico: {price}
+    Bet365: {bf_price}
     EV: {ev_display}
 
 {verdict}
@@ -420,8 +420,8 @@ def main() -> None:
 
         try:
             odds_data = get_event_odds(event_id)
-            betfair_odds = extract_first_betfair_odds(odds_data)
-            message = build_message(bet, betfair_odds)
+            Tipico_odds = extract_first_Bet365_odds(odds_data)
+            message = build_message(bet, Bet365_odds)
 
             if message is None:
                 continue
