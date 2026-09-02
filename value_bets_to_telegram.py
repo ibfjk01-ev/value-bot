@@ -333,10 +333,21 @@ def build_message(bet: Dict[str, Any], Bet365_odds: Dict[str, float]) -> Optiona
 
     sport = get_sport_from_bet(bet) or "unbekannt"
     league = event.get("league", {})
+
     if isinstance(league, dict):
-        league_name = league.get("name") or league.get("slug") or "Unbekannte Liga"
+    league_name = (
+        league.get("name")
+        or league.get("slug")
+        or event.get("leagueName")
+        or bet.get("leagueName")
+        or "Unbekannte Liga"
+    )
     else:
-        league_name = "Unbekannte Liga"
+    league_name = (
+        event.get("leagueName")
+        or bet.get("leagueName")
+        or "Unbekannte Liga"
+    )
 
     market = get_market_name_from_bet(bet)
     side = get_side_from_bet(bet)
