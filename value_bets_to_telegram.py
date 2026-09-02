@@ -343,7 +343,7 @@ def build_message(bet: Dict[str, Any], Bet365_odds: Dict[str, float]) -> Optiona
         or "Unbekannte Liga"
     )
     else:
-    league_name = (
+        league_name = (
         event.get("leagueName")
         or bet.get("leagueName")
         or "Unbekannte Liga"
