@@ -382,11 +382,14 @@ def build_message(bet: Dict[str, Any], Bet365_odds: Dict[str, float]) -> Optiona
         if diff <= 0:
             return None
 
-        if diff > DIFF_THRESHOLD:
+        if bf_price < 2.00 and price >= 2.00:
+            header = "🚨 ALERT – QUOTENSPRUNG ÜBER 2,00"
+            verdict = "Bet365 < 2,00 → Tipico ≥ 2,00 | 1 UNIT"
+        elif diff > DIFF_THRESHOLD:
             header = "🟢 STRONG VALUE"
             verdict = f"Value compared to Bet365: +{diff:.2f}"
         else:
-            header = "🔵 SMALL VALUE"
+            header = "🟡 SMALL VALUE"
             verdict = "Low value compared to the market"
     else:
         return None
