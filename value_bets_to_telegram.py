@@ -7,7 +7,7 @@ CHAT_ID = "253296226"
 
 BASE_URL = "https://api.odds-api.io/v3"
 
-VALUE_BOOKMAKER = "Tipico"
+VALUE_BOOKMAKER = "Tipico DE"
 REFERENCE_BOOKMAKER = "Bet365"
 
 ALLOWED_SPORTS = {"football", "tennis", "basketball"}
@@ -180,7 +180,7 @@ def filter_bets(bets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def normalize_bookmaker_name(name: str) -> str:
     n = str(name).strip().lower()
-    if n in {"Tipico", "Tipico", "Tipico"}:
+    if n in {"Tipico DE", "Tipico DE", "Tipico DE"}:
         return "Tipico"
     return name
 
