@@ -420,7 +420,7 @@ def main() -> None:
 
         try:
             odds_data = get_event_odds(event_id)
-            Tipico_odds = extract_first_Bet365_odds(odds_data)
+            Bet365_odds = extract_first_Bet365_odds(odds_data)
             message = build_message(bet, Bet365_odds)
 
             if message is None:
