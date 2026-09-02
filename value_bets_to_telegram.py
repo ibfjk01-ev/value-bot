@@ -416,7 +416,7 @@ def main() -> None:
 
     sent = 0
 
-    for bet in bets[:12]:
+    for bet in bets[:15]:
         event_id = get_event_id_from_bet(bet)
         if not event_id:
             continue
