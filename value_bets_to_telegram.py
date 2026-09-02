@@ -175,7 +175,7 @@ def filter_bets(bets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             
         price = get_price_from_bet(bet)
 
-        if price is None or price < 1.50 or price > 3.00:
+        if price is None or price < 1.30 or price > 2.90:
             continue
 
         result.append(bet)
